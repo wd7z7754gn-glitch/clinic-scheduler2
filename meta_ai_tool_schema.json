@@ -1,0 +1,79 @@
+{
+  "tools": [
+    {
+      "name": "search_doctor_availability",
+      "description": "查詢診所醫師未來N天的可預約空閒時段（以15分鐘為一個時段）。當客戶想知道某位醫師何時有空時呼叫此函數。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "doctor_name": {
+            "type": "string",
+            "description": "醫師姓名，例如：吳燕城、殷煜軒、陳函君、王威傑、陳琮愷、曾梓豪、廖科深、葉芃樓、賴裕祥、謝宇捷、盧昱均"
+          },
+          "days": {
+            "type": "integer",
+            "description": "查詢未來幾天的時段，預設為3天，最多7天",
+            "default": 3,
+            "minimum": 1,
+            "maximum": 7
+          }
+        },
+        "required": ["doctor_name"]
+      }
+    },
+    {
+      "name": "book_appointment",
+      "description": "替客戶預約指定醫師的診間時段。在確認客戶姓名、電話、希望的日期時間後呼叫此函數。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "doctor_name": {
+            "type": "string",
+            "description": "醫師姓名"
+          },
+          "date": {
+            "type": "string",
+            "description": "預約日期，格式 YYYY-MM-DD，例如：2026-09-25"
+          },
+          "time": {
+            "type": "string",
+            "description": "預約時間，格式 HH:MM（24小時制），例如：09:00、14:15"
+          },
+          "patient_name": {
+            "type": "string",
+            "description": "客戶（患者）姓名"
+          },
+          "patient_phone": {
+            "type": "string",
+            "description": "客戶行動電話號碼"
+          },
+          "duration_mins": {
+            "type": "integer",
+            "description": "預計療程時間（分鐘），預設15分鐘",
+            "default": 15,
+            "enum": [15, 30, 45, 60, 90, 120]
+          },
+          "site": {
+            "type": "string",
+            "description": "指定診所站點：site1=南屯一日誠臻牙醫診所, site2=第二院區。不填則自動選擇",
+            "enum": ["site1", "site2"]
+          },
+          "note": {
+            "type": "string",
+            "description": "預約備註，例如初診、複診、特殊需求等"
+          }
+        },
+        "required": ["doctor_name", "date", "time", "patient_name", "patient_phone"]
+      }
+    },
+    {
+      "name": "list_doctors",
+      "description": "列出所有診所與可預約的醫師名單。當客戶不確定要找哪位醫師時呼叫。",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      }
+    }
+  ]
+}
